@@ -1,3 +1,6 @@
+from services.driverFactory.chrome_driver_factory import ChromeDriverFactory
+from services.driverFactory.firefox_driver_factory import FirefoxDriverFactory
+
 class MainController:
     def __init__(self, view, model):
         self.view = view
@@ -26,8 +29,8 @@ class MainController:
             return False
     
     def setDriverFactory(self, selectedBrowser):
-        if selectedBrowser == "Chrome" and not isinstance(self.model.driver_factory, ChromeDriverFactory):
-            self.model.update_driver_factory(ChromeDriverFactory())
-        elif selectedBrowser == "Firefox":
-            self.model.update_driver_factory(FirefoxDriverFactory())
+        if selectedBrowser == "Chrome" and not isinstance(self.model.driverFactory, ChromeDriverFactory):
+            self.model.updateDriverFactory(ChromeDriverFactory())
+        elif selectedBrowser == "Firefox" and not isinstance(self.model.driverFactory, FirefoxDriverFactory):
+            self.model.updateDriverFactory(FirefoxDriverFactory())
         

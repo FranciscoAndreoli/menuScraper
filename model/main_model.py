@@ -1,6 +1,5 @@
 
 
-from services.chrome_driver_factory import ChromeDriverFactory
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -18,7 +17,7 @@ class MainModel:
         driver = self.driverFactory.getDriver()
         if driver != None:
             driver.get(webLink)
-            self.getSectionsAndItems(driver, webLink)
+            self.getSectionsAndItems(driver)
 
     def getSectionsAndItems(self, driver):
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'main-content')))
