@@ -1,10 +1,12 @@
 from services.driverFactory.chrome_driver_factory import ChromeDriverFactory
 from services.driverFactory.firefox_driver_factory import FirefoxDriverFactory
+from model.uber_eats_scraper import UberEatsScraper
 
 class MainController:
-    def __init__(self, view, model):
+    def __init__(self, view, model, jsonManager):
         self.view = view
         self.model = model
+        self.jsonManager = jsonManager
         self.initialize_view()
 
     def initialize_view(self):
@@ -17,8 +19,9 @@ class MainController:
         webLink = self.view.entry_link.get()
 
         if(self.verifyData(webName, webLink)):
-           self.setDriverFactory(browser)
-           self.model.setDriver(webLink)
+           driver = self.setDriverFactory(browser)
+           self.setScraper(driver, webName, webLink)
+        
         else:
             self.view.displayMessage("Error", "The data entered is not correct.")
 
@@ -31,6 +34,13 @@ class MainController:
     def setDriverFactory(self, selectedBrowser):
         if selectedBrowser == "Chrome" and not isinstance(self.model.driverFactory, ChromeDriverFactory):
             self.model.updateDriverFactory(ChromeDriverFactory())
+        
         elif selectedBrowser == "Firefox" and not isinstance(self.model.driverFactory, FirefoxDriverFactory):
             self.model.updateDriverFactory(FirefoxDriverFactory())
+
+        return self.model.setDriver()
+    
+    def setScraper(self, driver, webName, webLink):
+        if(webName == "Uber Eats"):
+            UberEatsScraper(driver, self.jsonManager, webLink)
         
