@@ -1,5 +1,5 @@
 import json
-from .IJsonManager import IJsonManager
+from .iJsonManager import IJsonManager
 import os
 
 class JsonManager(IJsonManager):
